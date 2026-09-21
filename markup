@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ian Smith — Product Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FAF7F2;
+    --greige: #D9D2C7;
+    --greige-line: #C7BBA9;
+    --warm-gray: #8C8579;
+    --ink: #2F3E33;
+    --forest: #2F3E33;
+    --forest-deep: #212C24;
+    --orange: #E08A4F;
+    --orange-deep: #C36F36;
+    --orange-tint: #F5DFC8;
+    --on-accent: #FAF7F2;
+    --on-orange: #2F3E33;
+    --contour-opacity: 0.05;
+    --max: 1120px;
+    --gutter: clamp(24px, 5vw, 64px);
+  }
+
+  html[data-theme="dark"]{
+    --paper: #211E19;
+    --greige: #2B2620;
+    --greige-line: #3C352B;
+    --warm-gray: #A79D8C;
+    --ink: #F1EAE0;
+    --forest: #93AE9B;
+    --forest-deep: #6E8877;
+    --orange: #E79A63;
+    --orange-deep: #F0AF7E;
+    --orange-tint: #3A2C1E;
+    --contour-opacity: 0.06;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Figtree', sans-serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+  }
+
+  .contour-bg{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .contour-bg path{
+    transition: stroke 0.3s ease;
+  }
+
+  h1, h2, h3{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  p{ margin: 0; }
+
+  a{
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .wrap{
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  ::selection{ background: var(--orange-tint); color: var(--forest-deep); }
+
+  a:focus-visible,
+  button:focus-visible{
+    outline: 2px solid var(--forest);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- Nav ---------- */
+
+  header{
+    padding: 32px 0 0;
+  }
+
+  .nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--greige-line);
+  }
+
+  .nav .mark{
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .nav .mark span{ color: var(--orange-deep); }
+
+  .nav ul{
+    list-style: none;
+    display: flex;
+    gap: clamp(20px, 3vw, 40px);
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav a{
+    font-size: 0.95rem;
+    color: var(--forest);
+    transition: color 0.15s ease;
+  }
+
+  .nav a:hover{ color: var(--orange-deep); }
+
+  .nav-toggle{ display: none; }
+
+  .nav-right{
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 3vw, 40px);
+  }
+
+  .theme-toggle{
+    position: relative;
+    width: 46px;
+    height: 26px;
+    border-radius: 100px;
+    border: 1px solid var(--greige-line);
+    background: var(--greige);
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+
+  .theme-toggle .dot{
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--orange-deep);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+
+  html[data-theme="dark"] .theme-toggle .dot{
+    transform: translateX(20px);
+    background: var(--forest);
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero{
+    padding: clamp(64px, 12vw, 148px) 0 clamp(48px, 8vw, 96px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .hero h1{
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.08;
+    max-width: 16ch;
+  }
+
+  .hero p{
+    color: var(--warm-gray);
+    font-size: 1.15rem;
+    max-width: 46ch;
+  }
+
+  .hero p strong{
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    background: var(--orange);
+    color: var(--on-orange);
+    padding: 14px 26px;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-top: 8px;
+    transition: background 0.15s ease;
+  }
+
+  .btn:hover{ background: var(--orange-deep); }
+
+  /* signature line motif */
+
+  .motif{
+    padding: 0 0 clamp(48px, 9vw, 96px);
+  }
+
+  .motif svg{ width: 100%; height: auto; display: block; }
+
+  /* ---------- Section shell ---------- */
+
+  section{
+    padding: clamp(64px, 10vw, 120px) 0;
+    border-top: 1px solid var(--greige-line);
+  }
+
+  .section-head{
+    max-width: 62ch;
+    margin-bottom: clamp(48px, 7vw, 84px);
+  }
+
+  .section-head h2{
+    font-size: clamp(1.7rem, 3.2vw, 2.2rem);
+    margin-bottom: 16px;
+  }
+
+  .section-head .lede{
+    color: var(--warm-gray);
+    max-width: 50ch;
+    font-size: 1.08rem;
+  }
+
+  /* ---------- Approach ---------- */
+
+  .principles{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .principle{
+    padding: clamp(28px, 4vw, 40px) 0;
+    border-top: 1px solid var(--forest);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: clamp(16px, 3vw, 48px);
+  }
+
+  .principle:last-child{
+    border-bottom: 1px solid var(--forest);
+  }
+
+  .principle h3{
+    font-size: 1.2rem;
+    font-weight: 600;
+    max-width: 16ch;
+  }
+
+  .principle p{
+    color: var(--warm-gray);
+    font-size: 1.02rem;
+    max-width: 52ch;
+  }
+
+  /* ---------- Work ---------- */
+
+  .work-list{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Featured (lead) case study */
+
+  .case-featured{
+    padding-bottom: clamp(48px, 7vw, 80px);
+    border-bottom: 1px solid var(--greige-line);
+    margin-bottom: clamp(48px, 7vw, 80px);
+  }
+
+  .case-client{
+    color: var(--orange-deep);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .case-featured h3{
+    font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+    line-height: 1.2;
+    max-width: 22ch;
+    margin-bottom: 22px;
+  }
+
+  .case-featured .case-body{
+    color: var(--warm-gray);
+    font-size: 1.08rem;
+    max-width: 60ch;
+    margin-bottom: 28px;
+  }
+
+  .case-featured .result{
+    display: inline-block;
+    padding-top: 18px;
+    border-top: 2px solid var(--forest);
+    font-size: 1rem;
+    color: var(--ink);
+    font-weight: 500;
+    max-width: 52ch;
+  }
+
+  .case-featured .result span{
+    display: block;
+    color: var(--warm-gray);
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-top: 6px;
+  }
+
+  .case-featured .motif-strip{
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+
+  .case-featured .motif-strip svg{ width: 100%; height: auto; display: block; }
+
+  /* Secondary cases */
+
+  .case{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
+    padding: clamp(40px, 5vw, 56px) 0;
+  }
+
+  .case:not(:last-child){
+    border-bottom: 1px solid var(--greige-line);
+  }
+
+  .case:nth-child(even) .case-visual{ order: 2; }
+  .case:nth-child(even) .case-text{ order: 1; }
+
+  .case-visual{
+    background: var(--greige);
+    border-radius: 4px;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10%;
+  }
+
+  .case-visual svg{ width: 100%; height: 100%; }
+
+  .case-text h3{
+    font-size: 1.5rem;
+    line-height: 1.25;
+    margin-bottom: 16px;
+    max-width: 20ch;
+  }
+
+  .case-text p{
+    color: var(--warm-gray);
+    font-size: 1rem;
+  }
+
+  .case-text .result{
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--greige-line);
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+
+  .case-text .result span{
+    display: block;
+    color: var(--warm-gray);
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  /* ---------- About ---------- */
+
+  .about{
+    max-width: 64ch;
+  }
+
+  .about-portrait{
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 3 / 4;
+    background: var(--orange-tint);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: clamp(32px, 5vw, 48px);
+  }
+
+  .about-portrait svg{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .about-copy p{
+    margin-bottom: 20px;
+    font-size: 1.08rem;
+    color: var(--ink);
+    max-width: 60ch;
+  }
+
+  .about-copy p.muted{ color: var(--warm-gray); }
+
+  .about-facts{
+    margin-top: clamp(32px, 5vw, 48px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(24px, 4vw, 40px);
+  }
+
+  .about-facts div{
+    border-top: 1px solid var(--greige-line);
+    padding-top: 12px;
+    min-width: 130px;
+  }
+
+  .about-facts strong{
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--forest);
+  }
+
+  .about-facts span{
+    color: var(--warm-gray);
+    font-size: 0.88rem;
+  }
+
+  /* ---------- Contact ---------- */
+
+  .contact h2{
+    font-size: clamp(2rem, 4.2vw, 3.1rem);
+    max-width: 16ch;
+    line-height: 1.14;
+    margin-bottom: clamp(32px, 5vw, 48px);
+  }
+
+  .contact-links{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .contact-links a{
+    font-size: 1.08rem;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--greige-line);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .contact-links a:hover{
+    color: var(--orange-deep);
+    border-color: var(--orange-deep);
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer{
+    border-top: 1px solid var(--greige-line);
+    padding: 28px 0 40px;
+    display: flex;
+    justify-content: space-between;
+    color: var(--warm-gray);
+    font-size: 0.85rem;
+  }
+
+  /* ---------- Motion ---------- */
+
+  @media (prefers-reduced-motion: no-preference){
+    .draw-line{
+      stroke-dasharray: 1400;
+      stroke-dashoffset: 1400;
+      animation: draw 1.8s ease forwards 0.2s;
+    }
+    @keyframes draw{
+      to{ stroke-dashoffset: 0; }
+    }
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 860px){
+    .nav ul{
+      position: fixed;
+      inset: 0 0 0 30%;
+      background: var(--paper);
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 32px;
+      gap: 28px;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      border-left: 1px solid var(--greige-line);
+    }
+    .nav ul.open{ transform: translateX(0); }
+    .nav a{ font-size: 1.1rem; }
+    .nav-toggle{
+      display: block;
+      background: none;
+      border: none;
+      font-family: 'Figtree', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 4px;
+    }
+    .principle{ grid-template-columns: 1fr; }
+    .case{ grid-template-columns: 1fr; }
+    .case:nth-child(even) .case-visual,
+    .case:nth-child(even) .case-text{ order: initial; }
+    footer{ flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="contour-bg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="contours" width="420" height="260" patternUnits="userSpaceOnUse">
+      <path d="M-20,40 C 40,10 80,70 140,42 C 200,14 240,72 300,44 C 350,20 400,58 440,40"
+            fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.55"/>
+      <path d="M-20,90 C 30,120 90,64 150,92 C 210,120 250,66 310,94 C 355,112 400,80 440,92"
+            fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.4"/>
+      <path d="M-20,150 C 45,180 95,128 155,152 C 215,176 255,124 315,150 C 360,168 405,140 440,152"
+            fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.45"/>
+      <path d="M-20,205 C 35,178 85,228 145,202 C 205,176 245,226 305,200 C 350,182 400,212 440,202"
+            fill="none" stroke="var(--ink)" stroke-width="1" opacity="0.35"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#contours)" style="opacity: var(--contour-opacity);"/>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="mark">Ian Smith<span>.</span></a>
+    <div class="nav-right">
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navList">Menu</button>
+      <ul id="navList">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Switch to dark mode">
+        <span class="dot"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" style="border-top:none;">
+    <div class="wrap" style="display:contents;">
+      <h1>Strategist translating design into decisions</h1>
+      <p>I'm <strong>Ian Smith</strong>. I bridge research, design, and the business conversations that decide what ships — turning ambiguous problems into direction teams can actually commit to.</p>
+      <a href="#work" class="btn">See the work</a>
+    </div>
+  </section>
+
+  <div class="wrap motif" aria-hidden="true">
+    <svg viewBox="0 0 1000 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="draw-line" d="M20 80
+        C 60 20, 90 140, 120 80
+        C 140 40, 160 120, 190 70
+        C 210 30, 230 130, 260 75
+        C 285 35, 300 115, 330 80
+        C 350 50, 365 100, 390 78"
+        stroke="var(--orange)" stroke-width="3" stroke-linecap="round"/>
+      <path class="draw-line" d="M390 78 L 980 80" stroke="var(--forest)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <section id="approach">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How I work</h2>
+        <p class="lede">Three habits shape every engagement, whether it's a two-week sprint with one product team or a multi-quarter effort across a whole organization.</p>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <h3>Start with the room, not the framework</h3>
+          <p>Research, design critiques, stakeholder meetings — I sit in on all of it before naming the problem. The framework comes after I understand what's actually being disagreed about.</p>
+        </div>
+        <div class="principle">
+          <h3>Translate, don't summarize</h3>
+          <p>A summary repeats what was said. A translation tells a designer what a business constraint means for their work, and tells an executive what a usability finding means for the roadmap.</p>
+        </div>
+        <div class="principle">
+          <h3>Leave behind a decision, not a deck</h3>
+          <p>Every engagement ends with something the team can point to and act on — a framework, a priority, a clear next step — not a set of slides that gets filed away.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Selected work</h2>
+        <p class="lede">A few engagements where the starting point was noise from a dozen directions, and the job was finding the one signal worth acting on.</p>
+      </div>
+
+      <div class="work-list">
+
+        <div class="case-featured">
+          <p class="case-client">DFW Innovation Consumer Council</p>
+          <h3>Turning 18 months of scattered consumer research into one decision framework</h3>
+          <p class="case-body">The council represented consumer-research programs from 14 member companies, each running its own studies with no shared way to compare findings or decide what mattered. I worked across researchers, designers, and executive sponsors to build a single framework that translated hundreds of disconnected research signals into one scoring model leadership could actually use in a room together.</p>
+          <div class="result">Adopted as the council's standard evaluation framework across all 14 member companies<span>Rolled out at the annual summit; now used in every quarterly review</span></div>
+          <div class="motif-strip">
+            <svg viewBox="0 0 1000 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 45 C 60 15 90 75 140 45 C 180 22 210 68 250 46 C 285 27 310 63 345 45"
+                    stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M345 45 L 990 45" stroke="var(--forest)" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="345" cy="45" r="5" fill="var(--forest)"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="case-visual">
+            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+              <rect x="40" y="35" width="35" height="35" fill="var(--orange-deep)"/>
+              <rect x="85" y="55" width="35" height="35" fill="var(--orange)" opacity="0.7"/>
+              <rect x="130" y="40" width="35" height="35" fill="var(--orange)" opacity="0.4"/>
+              <line x1="24" y1="115" x2="176" y2="115" stroke="var(--forest)" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="case-text">
+            <p class="case-client">Lindqvist Health — Digital Benefits Platform</p>
+            <h3>Aligning four product teams behind a single roadmap</h3>
+            <p>Four product lines had grown in isolation, each with its own roadmap and its own definition of done. I ran discovery across design, engineering, and business stakeholders, then translated the findings into one roadmap the executive team could sign off on in a single meeting.</p>
+            <div class="result">Roadmap sign-off cut from six weeks to a single meeting<span>Across four product lines and three executive stakeholders</span></div>
+          </div>
+        </div>
+
+        <div class="case">
+          <div class="case-visual">
+            <svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="100" cy="75" r="46" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-dasharray="4 6"/>
+              <circle cx="100" cy="75" r="24" fill="var(--orange-deep)"/>
+              <line x1="24" y1="130" x2="176" y2="130" stroke="var(--forest)" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="case-text">
+            <p class="case-client">Fen &amp; Co — Sustainable Homeware</p>
+            <h3>Turning fragmented usability research into one product priority</h3>
+            <p>Customer interviews pointed in five different directions until we mapped them against the business's real constraints. What emerged was a single, defensible priority that design and merchandising could both stand behind.</p>
+            <div class="result">37% increase in returning customers within two quarters<span>Measured against the prior two-quarter baseline</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="about">
+        <div class="about-portrait">
+          <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+            <rect width="300" height="400" fill="var(--orange-tint)"/>
+            <circle cx="150" cy="160" r="80" fill="var(--orange)" opacity="0.55"/>
+            <path d="M40 400 C 40 300, 260 300, 260 400 Z" fill="var(--forest)" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="about-copy">
+          <h2 style="font-size: clamp(1.7rem, 3.2vw, 2.2rem); margin-bottom: 24px;">About</h2>
+          <p><i>I spent eight years moving between research, design, and the business conversations that decide what actually ships — first as a UX researcher, then leading product strategy at a mid-size product studio. I kept ending up in the same room: the one where good insights die in a deck nobody reads twice, and where designers and business stakeholders are having two different conversations about the same problem without realizing it.</i></p>
+          <p class="muted">Now I work independently with product and design teams who need someone to translate — to take a pile of research, prototypes, and stakeholder opinions and turn it into a decision people can commit to. Warm and direct when it counts, exploratory in process, and minimal in what I hand back.</p>
+          <div class="about-facts">
+            <div><strong>8 yrs</strong><span>In research, design &amp; product strategy</span></div>
+            <div><strong>20+</strong><span>Cross-functional engagements led</span></div>
+            <div><strong>4–10 wks</strong><span>Typical engagement length</span></div>
+            <div><strong>14</strong><span>Member companies aligned through one framework</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact">
+      <h2>Let's turn the next ambiguous problem into a decision.</h2>
+      <div class="contact-links">
+        <a href="mailto:ian@smith-family.me">Ian@smith-family.me</a>
+        <a href="https://www.linkedin.com/in/innovationian" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Ian Smith</span>
+  <span>Product Strategist, based in Dallas–Fort Worth</span>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navList.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  navList.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navList.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  themeToggle.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeToggle.setAttribute('aria-pressed', String(!isDark));
+    themeToggle.setAttribute('aria-label', isDark ? 'Switch to dark mode' : 'Switch to light mode');
+  });
+</script>
+
+</body>
+</html>
